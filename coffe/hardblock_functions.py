@@ -101,22 +101,22 @@ def flow_settings_pre_process(processed_flow_settings,cur_env):
   # formatting search_path
   search_path_dirs = []
   search_path_dirs.append(".")
-  try:
-    syn_root = cur_env.get("SYNOPSYS")
-    search_path_dirs = [os.path.join(syn_root,"libraries",dirname) for dirname in ["syn","syn_ver","sim_ver"] ]
-  except:
-    print("could not find 'SYNOPSYS' environment variable set, please source your ASIC tools or run the following command to your sysopsys home directory")
-    print("export SYNOPSYS=/abs/path/to/synopsys/home")
-    print("Ex. export SYNOPSYS=/CMC/tools/synopsys/syn_vN-2017.09/")
-    sys.exit(1)
+  # try:
+    # syn_root = cur_env.get("SYNOPSYS")
+    # search_path_dirs = [os.path.join(syn_root,"libraries",dirname) for dirname in ["syn","syn_ver","sim_ver"] ]
+  # except:
+    # print("could not find 'SYNOPSYS' environment variable set, please source your ASIC tools or run the following command to your sysopsys home directory")
+    # print("export SYNOPSYS=/abs/path/to/synopsys/home")
+    # print("Ex. export SYNOPSYS=/CMC/tools/synopsys/syn_vN-2017.09/")
+    # sys.exit(1)
   #Place and route
-  if(processed_flow_settings["pnr_tool"] == "innovus"):
-    try:
-      edi_root = cur_env.get("EDI_HOME")
-      processed_flow_settings["EDI_HOME"] = edi_root
-    except:
-      print("could not find 'EDI_HOME' environment variable set, please source your ASIC tools or run the following command to your INNOVUS/ENCOUNTER home directory")
-      sys.exit(1)
+  # if(processed_flow_settings["pnr_tool"] == "innovus"):
+    # try:
+      # edi_root = cur_env.get("EDI_HOME")
+      # processed_flow_settings["EDI_HOME"] = edi_root
+    # except:
+      # print("could not find 'EDI_HOME' environment variable set, please source your ASIC tools or run the following command to your INNOVUS/ENCOUNTER home directory")
+      # sys.exit(1)
   
   #creating search path values
   for p_lib_path in processed_flow_settings["process_lib_paths"]:
@@ -1642,87 +1642,87 @@ def run_pll_flow_stage(parallel_work_path):
 
 
 def hardblock_parallel_flow(flow_settings):
-  pre_flow_dir = os.getcwd()
-  #This expects cwd to be asic_work
-  hardblock_script_gen(flow_settings)
-  #make sure to be in the parallel_hardblock_folder
-  os.chdir(flow_settings["parallel_hardblock_folder"])
+  # pre_flow_dir = os.getcwd()
+  # #This expects cwd to be asic_work
+  # # hardblock_script_gen(flow_settings)
+  # #make sure to be in the parallel_hardblock_folder
+  # os.chdir(flow_settings["parallel_hardblock_folder"])
   
-  flow_stages = ["synth","pnr","sta"] 
-  ########################### PARALLEL SYNTHESIS SECTION ###########################
-  if flow_settings["hb_run_params"]["synth"]["run_flag"]:
-    print("Running synthesis scripts in parallel...")
-    synth_parallel_work_path = os.path.join(flow_settings["parallel_hardblock_folder"],flow_settings["top_level"],"synth","synth_parallel_work")
-    run_pll_flow_stage(synth_parallel_work_path)
-  ########################### PARALLEL SYNTHESIS SECTION ###########################
-  ########################### PARALLEL PNR SECTION #################################
-  if flow_settings["hb_run_params"]["pnr"]["run_flag"]:
-    print("Running pnr scripts in parallel...")
-    #below path should point to pnr directory in pll flow folder
-    pnr_parallel_path = os.path.join(flow_settings["parallel_hardblock_folder"],flow_settings["top_level"],"pnr")
-    if(flow_settings["partition_flag"]):
-      #DEPENDANCY OF PTN PNR SCRIPTS
-      # run_gen_blocks for each ptn block in design [] denotes parallelism
-      # gen_fp(dim) -> gen_ptns(dim) -> [gen_blocks(dim)]  -> pnr(top_lvl) -> assemble(all_parts_of_design) 
-      #if override outputs is set 
-      #pre_processing for filtering ptn commands by specified settings
-      #floorplan x dimension (this is used in the filename of generated scripts/outputs/reports)
-      fp_dim = float(flow_settings["ptn_params"]["top_settings"]["fp_init_dims"][0])
-      #get factors which we are scaling the initial dimension value with
-      scaling_array = [float(fac) for fac in flow_settings["ptn_params"]["top_settings"]["scaling_array"]]
-      #multiplies initial dimension to find the filenames of all dims we wish to run
-      scaled_dims = [fp_dim*fac for fac in scaling_array]
-      os.chdir(pnr_parallel_path)
-      for param_dir in os.listdir(pnr_parallel_path):
-        #traverse into pnr directory for a particular set of run parameters
-        os.chdir(param_dir)
-        #continue flag will skip the parameterized directory if it is outside of the user inputted filtering settings
-        continue_flag = False
-        # TODO this needs to check if the parameter dir is actually a param dir, to be quality it should make sure all parameters in the input param dict are present in filename
-        if("period" not in param_dir): 
-          os.chdir(pnr_parallel_path)
-          continue
-        #Before anything else use filter to only run the selected params:
-        #get a dict of the current directories parameter settings
-        param_dict = get_params_from_str(flow_settings["input_param_options"],param_dir)
-        #we will parse the current directory param dict and check to see if it contains params outside of our run settings, if so skip the directory
-        for cur_key,cur_val in list(param_dict.items()):
-          if cur_key in list(flow_settings["hb_run_params"]["param_filters"].keys()):
-            if all(cur_val != val for val in flow_settings["hb_run_params"]["param_filters"][cur_key]):
-              continue_flag = True
-              break
+  # flow_stages = ["synth","pnr","sta"] 
+  # ########################### PARALLEL SYNTHESIS SECTION ###########################
+  # if flow_settings["hb_run_params"]["synth"]["run_flag"]:
+  #   print("Running synthesis scripts in parallel...")
+  #   synth_parallel_work_path = os.path.join(flow_settings["parallel_hardblock_folder"],flow_settings["top_level"],"synth","synth_parallel_work")
+  #   # run_pll_flow_stage(synth_parallel_work_path)
+  # ########################### PARALLEL SYNTHESIS SECTION ###########################
+  # ########################### PARALLEL PNR SECTION #################################
+  # if flow_settings["hb_run_params"]["pnr"]["run_flag"]:
+  #   print("Running pnr scripts in parallel...")
+  #   #below path should point to pnr directory in pll flow folder
+  #   pnr_parallel_path = os.path.join(flow_settings["parallel_hardblock_folder"],flow_settings["top_level"],"pnr")
+  #   if(flow_settings["partition_flag"]):
+  #     #DEPENDANCY OF PTN PNR SCRIPTS
+  #     # run_gen_blocks for each ptn block in design [] denotes parallelism
+  #     # gen_fp(dim) -> gen_ptns(dim) -> [gen_blocks(dim)]  -> pnr(top_lvl) -> assemble(all_parts_of_design) 
+  #     #if override outputs is set 
+  #     #pre_processing for filtering ptn commands by specified settings
+  #     #floorplan x dimension (this is used in the filename of generated scripts/outputs/reports)
+  #     fp_dim = float(flow_settings["ptn_params"]["top_settings"]["fp_init_dims"][0])
+  #     #get factors which we are scaling the initial dimension value with
+  #     scaling_array = [float(fac) for fac in flow_settings["ptn_params"]["top_settings"]["scaling_array"]]
+  #     #multiplies initial dimension to find the filenames of all dims we wish to run
+  #     scaled_dims = [fp_dim*fac for fac in scaling_array]
+  #     os.chdir(pnr_parallel_path)
+  #     for param_dir in os.listdir(pnr_parallel_path):
+  #       #traverse into pnr directory for a particular set of run parameters
+  #       os.chdir(param_dir)
+  #       #continue flag will skip the parameterized directory if it is outside of the user inputted filtering settings
+  #       continue_flag = False
+  #       # TODO this needs to check if the parameter dir is actually a param dir, to be quality it should make sure all parameters in the input param dict are present in filename
+  #       if("period" not in param_dir): 
+  #         os.chdir(pnr_parallel_path)
+  #         continue
+  #       #Before anything else use filter to only run the selected params:
+  #       #get a dict of the current directories parameter settings
+  #       param_dict = get_params_from_str(flow_settings["input_param_options"],param_dir)
+  #       #we will parse the current directory param dict and check to see if it contains params outside of our run settings, if so skip the directory
+  #       for cur_key,cur_val in list(param_dict.items()):
+  #         if cur_key in list(flow_settings["hb_run_params"]["param_filters"].keys()):
+  #           if all(cur_val != val for val in flow_settings["hb_run_params"]["param_filters"][cur_key]):
+  #             continue_flag = True
+  #             break
 
-        #if the cur directory was outside of the run params, continue...
-        if(continue_flag):
-          os.chdir(pnr_parallel_path)
-          continue
+  #       #if the cur directory was outside of the run params, continue...
+  #       if(continue_flag):
+  #         os.chdir(pnr_parallel_path)
+  #         continue
 
-        #First group the scripts according to their floorplan dimensions
-        dim_grouped_scripts = []
-        for dim in scaled_dims:
-          dim_group = [f for f in os.listdir("scripts") if str(dim) in f]
-          dim_grouped_scripts.append(dim_group)
-        #Now group according to order of execution
-        order_of_exec_pnr_per_dim = []
-        for group in dim_grouped_scripts:
-          #TODO create filename data structure to prevent below fname dependancies
-          fp_gen_script = [f for f in group if "fp_gen" in f]
-          ptn_script = [f for f in group if "ptn.tcl" in f]
-          block_scripts = [f for f in group if "block" in f]
-          toplvl_script = [f for f in group if "toplvl" in f]
-          assembly_script = [f for f in group if "assembly" in f]
-          order_of_exec_pnr_scripts = [fp_gen_script,ptn_script,block_scripts,toplvl_script,assembly_script]
-          order_of_exec_pnr_scripts = [e[0] if len(e) == 1 else e for e in order_of_exec_pnr_scripts]
-          order_of_exec_pnr_per_dim.append(order_of_exec_pnr_scripts)
+  #       #First group the scripts according to their floorplan dimensions
+  #       dim_grouped_scripts = []
+  #       for dim in scaled_dims:
+  #         dim_group = [f for f in os.listdir("scripts") if str(dim) in f]
+  #         dim_grouped_scripts.append(dim_group)
+  #       #Now group according to order of execution
+  #       order_of_exec_pnr_per_dim = []
+  #       for group in dim_grouped_scripts:
+  #         #TODO create filename data structure to prevent below fname dependancies
+  #         fp_gen_script = [f for f in group if "fp_gen" in f]
+  #         ptn_script = [f for f in group if "ptn.tcl" in f]
+  #         block_scripts = [f for f in group if "block" in f]
+  #         toplvl_script = [f for f in group if "toplvl" in f]
+  #         assembly_script = [f for f in group if "assembly" in f]
+  #         order_of_exec_pnr_scripts = [fp_gen_script,ptn_script,block_scripts,toplvl_script,assembly_script]
+  #         order_of_exec_pnr_scripts = [e[0] if len(e) == 1 else e for e in order_of_exec_pnr_scripts]
+  #         order_of_exec_pnr_per_dim.append(order_of_exec_pnr_scripts)
 
-        #change to work directory to prepare to execute scripts
-        os.chdir("work")
-        output_dir = os.path.join("..","outputs")
+  #       #change to work directory to prepare to execute scripts
+  #       os.chdir("work")
+  #       output_dir = os.path.join("..","outputs")
 
-        cmd_series_list = []
+  #       cmd_series_list = []
         
         #Filter out innovus commands if the intermediary files already exist
-        for inn_command_series in order_of_exec_pnr_per_dim:
+        # for inn_command_series in order_of_exec_pnr_per_dim:
           
           #filter out commands which are out of bounds of our dims we want to evaluate
           # if not any(str(dim) in inn_command_series[0] for dim in scaled_dims):
@@ -1730,70 +1730,70 @@ def hardblock_parallel_flow(flow_settings):
             # continue
 
           #if override outputs is selected the script will not check for intermediate files in the ptn flow and will start from the beginning
-          if(not flow_settings["hb_run_params"]["pnr"]["override_outputs"]):
+          # if(not flow_settings["hb_run_params"]["pnr"]["override_outputs"]):
             #if theres already an assembled design saved for the fp flow skip it
-            saved_design = os.path.join(output_dir,os.path.splitext(inn_command_series[1])[0]+"_assembled.dat")
-            if(os.path.exists(saved_design)):
-              print(("found %s, Skipping..." % (saved_design)))
+            # saved_design = os.path.join(output_dir,os.path.splitext(inn_command_series[1])[0]+"_assembled.dat")
+            # if(os.path.exists(saved_design)):
+              # print(("found %s, Skipping..." % (saved_design)))
               # print(os.getcwd())
-              continue
+              # continue
 
             #if top level flow has been run only run the assembly
-            saved_tl_imp = os.path.join(os.path.splitext(inn_command_series[1])[0],flow_settings["top_level"],flow_settings["top_level"]+"_imp")
+            # saved_tl_imp = os.path.join(os.path.splitext(inn_command_series[1])[0],flow_settings["top_level"],flow_settings["top_level"]+"_imp")
 
-            #if partition flow has been run only run top lvl + assembly
-            ptn_dir = os.path.join(os.path.splitext(inn_command_series[1])[0])
+            # #if partition flow has been run only run top lvl + assembly
+            # ptn_dir = os.path.join(os.path.splitext(inn_command_series[1])[0])
             
-            cmds = []
+            # cmds = []
             #loop through commands for this fp size and group the lists s.t they are in the following format:
             #cmds = [fp_gen.tcl, ptn.tcl, [blk1.tcl, blk2.tcl, ...],top_lvl.tcl, assemble.tcl]
-            for cmd in inn_command_series:
-              if(isinstance(cmd,str)):
-                cmds.append(os.path.join("..","scripts",cmd))
-              elif(isinstance(cmd,list)):
-                blk_cmds = [os.path.join("..","scripts",blk_cmd) for blk_cmd in cmd]
-                cmds.append(blk_cmds)
-            #if there is a top level implementation, we can delete all commands leading up to assembly script
-            if(os.path.isfile(saved_tl_imp)):
-              print("found top level imp, running only assembly")
-              print((os.getcwd()))
-              del cmds[0:3]
-            #if there is a ptn directory, we can delete all commands leading up to block level flow
-            elif(os.path.isdir(ptn_dir)):
-              print("found ptn dir, running only blocks + toplvl + assembly")
-              print((os.getcwd()))
-              del cmds[0:2]
-            cmd_series_list.append(cmds)
-          else:
-            #if the user selected to override all outputs
-            cmd_series_list = []
-            for cmd_series in order_of_exec_pnr_per_dim:
-              cmds = []
-              for cmd in cmd_series:
-                if(isinstance(cmd,str)):
-                  cmds.append(os.path.join("..","scripts",cmd))
-                elif(isinstance(cmd,list)):
-                  blk_cmds = [os.path.join("..","scripts",blk_cmd) for blk_cmd in cmd]
-                  cmds.append(blk_cmds)
-              cmd_series_list.append(cmds)
+    #         for cmd in inn_command_series:
+    #           if(isinstance(cmd,str)):
+    #             cmds.append(os.path.join("..","scripts",cmd))
+    #           elif(isinstance(cmd,list)):
+    #             blk_cmds = [os.path.join("..","scripts",blk_cmd) for blk_cmd in cmd]
+    #             cmds.append(blk_cmds)
+    #         #if there is a top level implementation, we can delete all commands leading up to assembly script
+    #         if(os.path.isfile(saved_tl_imp)):
+    #           print("found top level imp, running only assembly")
+    #           print((os.getcwd()))
+    #           del cmds[0:3]
+    #         #if there is a ptn directory, we can delete all commands leading up to block level flow
+    #         elif(os.path.isdir(ptn_dir)):
+    #           print("found ptn dir, running only blocks + toplvl + assembly")
+    #           print((os.getcwd()))
+    #           del cmds[0:2]
+    #         cmd_series_list.append(cmds)
+    #       else:
+    #         #if the user selected to override all outputs
+    #         cmd_series_list = []
+    #         for cmd_series in order_of_exec_pnr_per_dim:
+    #           cmds = []
+    #           for cmd in cmd_series:
+    #             if(isinstance(cmd,str)):
+    #               cmds.append(os.path.join("..","scripts",cmd))
+    #             elif(isinstance(cmd,list)):
+    #               blk_cmds = [os.path.join("..","scripts",blk_cmd) for blk_cmd in cmd]
+    #               cmds.append(blk_cmds)
+    #           cmd_series_list.append(cmds)
               
-        #At this point the cmd_series_list should be in the following format
-        #cmd_series_list = [[fp_gen_dimx.tcl, ptn_dimx.tcl, [blk1_dimx.tcl, blk2_dimx.tcl, ...],top_lvl_dimx.tcl, assemble_dimx.tcl],[fp_gen_dimx.tcl, ...], ...]
-        pool = mp.Pool(int(flow_settings["mp_num_cores"]))
-        #execute all scripts according to order in list
-        pool.map(run_inn_dim_specific_pnr_cmd_series,cmd_series_list)
-        pool.close()
-        os.chdir(pnr_parallel_path)
-    else:
-      #If not running partitioning, pnr scripts will be executed in parallel fashion based on parameters in hardblock_settings file and will execute all scripts in parallel
-      pnr_parallel_work_path = os.path.join(flow_settings["parallel_hardblock_folder"],flow_settings["top_level"],"pnr","pnr_parallel_work")
-      run_pll_flow_stage(pnr_parallel_work_path)
+    #     #At this point the cmd_series_list should be in the following format
+    #     #cmd_series_list = [[fp_gen_dimx.tcl, ptn_dimx.tcl, [blk1_dimx.tcl, blk2_dimx.tcl, ...],top_lvl_dimx.tcl, assemble_dimx.tcl],[fp_gen_dimx.tcl, ...], ...]
+    #     pool = mp.Pool(int(flow_settings["mp_num_cores"]))
+    #     #execute all scripts according to order in list
+    #     pool.map(run_inn_dim_specific_pnr_cmd_series,cmd_series_list)
+    #     pool.close()
+    #     os.chdir(pnr_parallel_path)
+    # else:
+    #   #If not running partitioning, pnr scripts will be executed in parallel fashion based on parameters in hardblock_settings file and will execute all scripts in parallel
+    #   pnr_parallel_work_path = os.path.join(flow_settings["parallel_hardblock_folder"],flow_settings["top_level"],"pnr","pnr_parallel_work")
+    #   # run_pll_flow_stage(pnr_parallel_work_path)
   ########################### PARALLEL PNR SECTION #################################
   ########################### PARALLEL STA SECTION #################################
-  if(flow_settings["hb_run_params"]["sta"]["run_flag"]):
-    print("Running sta scripts in parallel...")
-    sta_parallel_work_path = os.path.join(flow_settings["parallel_hardblock_folder"],flow_settings["top_level"],"sta","sta_parallel_work")
-    run_pll_flow_stage(sta_parallel_work_path)
+  # if(flow_settings["hb_run_params"]["sta"]["run_flag"]):
+  #   print("Running sta scripts in parallel...")
+  #   sta_parallel_work_path = os.path.join(flow_settings["parallel_hardblock_folder"],flow_settings["top_level"],"sta","sta_parallel_work")
+  #   run_pll_flow_stage(sta_parallel_work_path)
   ########################### PARALLEL STA SECTION #################################
   
 
@@ -1801,12 +1801,12 @@ def hardblock_parallel_flow(flow_settings):
 
   #hardblock flow stuff
   # lowest_cost = sys.float_info.max
-  # lowest_cost_area = 1.0
-  # lowest_cost_delay = 1.0
-  # lowest_cost_power = 1.0
+  lowest_cost_area = 1.0
+  lowest_cost_delay = 1.0
+  lowest_cost_power = 1.0
   
-  os.chdir(pre_flow_dir)
-  # return (float(lowest_cost_area), float(lowest_cost_delay), float(lowest_cost_power))
+  # os.chdir(pre_flow_dir)
+  return (float(lowest_cost_area), float(lowest_cost_delay), float(lowest_cost_power))
 
 
 def run_inn_dim_specific_pnr_cmd_series(inn_command_series):
@@ -2218,56 +2218,61 @@ def hardblock_flow(flow_settings):
   """
   This function will write and run asic flow scripts for each stage of the asic flow and for each combination of user inputted parameters  
   """
-  pre_func_dir = os.getcwd()
-  cur_env = os.environ.copy()
-  processed_flow_settings = flow_settings
-  flow_settings_pre_process(processed_flow_settings,cur_env)
-  # Enter all the signals that change modes
-  lowest_cost = sys.float_info.max
-  lowest_cost_area = 1.0
-  lowest_cost_delay = 1.0
-  lowest_cost_power = 1.0
-  subprocess.call("mkdir -p " + flow_settings['synth_folder'] + "\n", shell=True)
-  subprocess.call("mkdir -p " + flow_settings['pr_folder'] + "\n", shell=True)
-  subprocess.call("mkdir -p " + flow_settings['primetime_folder'] + "\n", shell=True)
-  # Make sure we managed to read the design files
-  assert len(processed_flow_settings["design_files"]) >= 1
-  for clock_period in flow_settings['clock_period']:
-    for wire_selection in flow_settings['wire_selection']:
-      synth_report_str,syn_output_path = run_synth(processed_flow_settings,clock_period,wire_selection)
-      for metal_layer in flow_settings['metal_layers']:
-        for core_utilization in flow_settings['core_utilization']:
-          #set the pnr flow to accept the correct name for flattened netlist
-          pnr_report_str, pnr_output_path, total_area = run_pnr(processed_flow_settings,metal_layer,core_utilization,synth_report_str,syn_output_path)
-          mode_enabled = True if len(flow_settings['mode_signal']) > 0 else False
-          the_power = 0.0
-          # Optional: use modelsim to generate an activity file for the design:
-          if flow_settings['generate_activity_file'] is True:
-            run_sim()
-          #loops over every combination of user inputted modes to set the set_case_analysis value (determines value of mode mux)
-          for x in range(0, 2**len(flow_settings['mode_signal']) + 1):
-            library_setup_time, data_arrival_time, total_delay, total_dynamic_power = run_power_timing(flow_settings,mode_enabled,clock_period,x,syn_output_path,pnr_report_str,pnr_output_path)
-            # write the final report file:
-            if mode_enabled and x <2**len(flow_settings['mode_signal']):
-              file = open("report_mode" + str(x) + "_" + str(flow_settings['top_level']) + "_" + str(clock_period) + "_" + str(wire_selection) + "_wire_" + str(metal_layer) + "_" + str(core_utilization) + ".txt" ,"w")
-            else:
-              file = open("report_" + str(flow_settings['top_level']) + "_" + str(clock_period) + "_" + str(wire_selection) + "_wire_" + str(metal_layer) + "_" + str(core_utilization) + ".txt" ,"w")
-            file.write("total area = "  + str(total_area[0]) +  " um^2 \n")
-            file.write("total delay = " + str(total_delay) + " ns \n")
-            file.write("total power = " + str(total_dynamic_power[0]) + " W \n")
-            file.close()
-            if total_dynamic_power[0] > the_power:
-              the_power = total_dynamic_power[0]
-            if lowest_cost > math.pow(float(total_area[0]), float(flow_settings['area_cost_exp'])) * math.pow(float(total_delay), float(flow_settings['delay_cost_exp'])):
-              lowest_cost = math.pow(float(total_area[0]), float(flow_settings['area_cost_exp'])) * math.pow(float(total_delay), float(flow_settings['delay_cost_exp']))
-              lowest_cost_area = float(total_area[0])
-              lowest_cost_delay = float(total_delay)
-              lowest_cost_power = float(the_power)
-            del total_dynamic_power[:]
-            del library_setup_time[:]
-            del data_arrival_time[:]
+  # pre_func_dir = os.getcwd()
+  # cur_env = os.environ.copy()
+  # processed_flow_settings = flow_settings
+  # flow_settings_pre_process(processed_flow_settings,cur_env)
+  # # Enter all the signals that change modes
+  # lowest_cost = sys.float_info.max
+  # lowest_cost_area = 1.0
+  # lowest_cost_delay = 1.0
+  # lowest_cost_power = 1.0
+  # subprocess.call("mkdir -p " + flow_settings['synth_folder'] + "\n", shell=True)
+  # subprocess.call("mkdir -p " + flow_settings['pr_folder'] + "\n", shell=True)
+  # subprocess.call("mkdir -p " + flow_settings['primetime_folder'] + "\n", shell=True)
+  # # Make sure we managed to read the design files
+  # assert len(processed_flow_settings["design_files"]) >= 1
+  # for clock_period in flow_settings['clock_period']:
+  #   for wire_selection in flow_settings['wire_selection']:
+  #     synth_report_str,syn_output_path = run_synth(processed_flow_settings,clock_period,wire_selection)
+  #     for metal_layer in flow_settings['metal_layers']:
+  #       for core_utilization in flow_settings['core_utilization']:
+  #         #set the pnr flow to accept the correct name for flattened netlist
+  #         pnr_report_str, pnr_output_path, total_area = run_pnr(processed_flow_settings,metal_layer,core_utilization,synth_report_str,syn_output_path)
+  #         mode_enabled = True if len(flow_settings['mode_signal']) > 0 else False
+  #         the_power = 0.0
+  #         # Optional: use modelsim to generate an activity file for the design:
+  #         if flow_settings['generate_activity_file'] is True:
+  #           run_sim()
+  #         #loops over every combination of user inputted modes to set the set_case_analysis value (determines value of mode mux)
+  #         for x in range(0, 2**len(flow_settings['mode_signal']) + 1):
+  #           library_setup_time, data_arrival_time, total_delay, total_dynamic_power = run_power_timing(flow_settings,mode_enabled,clock_period,x,syn_output_path,pnr_report_str,pnr_output_path)
+  #           # write the final report file:
+  #           if mode_enabled and x <2**len(flow_settings['mode_signal']):
+  #             file = open("report_mode" + str(x) + "_" + str(flow_settings['top_level']) + "_" + str(clock_period) + "_" + str(wire_selection) + "_wire_" + str(metal_layer) + "_" + str(core_utilization) + ".txt" ,"w")
+  #           else:
+  #             file = open("report_" + str(flow_settings['top_level']) + "_" + str(clock_period) + "_" + str(wire_selection) + "_wire_" + str(metal_layer) + "_" + str(core_utilization) + ".txt" ,"w")
+  #           file.write("total area = "  + str(total_area[0]) +  " um^2 \n")
+  #           file.write("total delay = " + str(total_delay) + " ns \n")
+  #           file.write("total power = " + str(total_dynamic_power[0]) + " W \n")
+  #           file.close()
+  #           if total_dynamic_power[0] > the_power:
+  #             the_power = total_dynamic_power[0]
+  #           if lowest_cost > math.pow(float(total_area[0]), float(flow_settings['area_cost_exp'])) * math.pow(float(total_delay), float(flow_settings['delay_cost_exp'])):
+  #             lowest_cost = math.pow(float(total_area[0]), float(flow_settings['area_cost_exp'])) * math.pow(float(total_delay), float(flow_settings['delay_cost_exp']))
+  #             lowest_cost_area = float(total_area[0])
+  #             lowest_cost_delay = float(total_delay)
+  #             lowest_cost_power = float(the_power)
+  #           del total_dynamic_power[:]
+  #           del library_setup_time[:]
+  #           del data_arrival_time[:]
 
-  os.chdir(pre_func_dir)  
+  # os.chdir(pre_func_dir)  
+
+  lowest_cost_area = float(1.0)
+  lowest_cost_delay = float(1.0)
+  lowest_cost_power = float(1.0)
+
   return (float(lowest_cost_area), float(lowest_cost_delay), float(lowest_cost_power))
 
 ########################################## SERIAL FLOW ##########################################

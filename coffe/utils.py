@@ -558,7 +558,7 @@ def load_params(filename,run_options):
         'mp_num_cores': -1,
         'parallel_hardblock_folder': "",
         'condensed_results_folder': "",
-        'coffe_repo_path': "~/COFFE",
+        'coffe_repo_path': "/mnt/vault1/rsunketa/COFFE",
         'hb_run_params': {},
         'ptn_params': {}
     }
@@ -1491,7 +1491,7 @@ def load_hard_params(filename,run_options):
         'mp_num_cores': "",
         'parallel_hardblock_folder': "",
         'condensed_results_folder': "",
-        'coffe_repo_path': "~/COFFE",
+        'coffe_repo_path': "/mnt/vault1/rsunketa/COFFE",
         'run_settings_file': ""
     }
     

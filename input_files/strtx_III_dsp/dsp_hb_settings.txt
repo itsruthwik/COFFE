@@ -13,7 +13,7 @@
 # ^ this would sweep period and evaluate asic flow for both values
 
 # The folder in which all the design files are located:
-design_folder=~/COFFE/input_files/strtx_III_dsp/dsp_block_hdl
+design_folder=/mnt/vault1/rsunketa/COFFE/input_files/strtx_III_dsp/dsp_block_hdl
 
 # The design language. Should be either 'verilog', 'vhdl' or 'sverilog'
 design_language=verilog
@@ -45,7 +45,7 @@ clock_period=2.22
 top_level=dsp
 
 # The name of the folder in which post-synthesis files and synthesis reports are to be stored
-synth_folder=~/COFFE/output_files/strtx_III_dsp/synth
+synth_folder=/mnt/vault1/rsunketa/COFFE/output_files/strtx_III_dsp/synth
 
 # Do you want to be informed of warnings during synthesis?
 
@@ -104,7 +104,7 @@ height_to_width_ratio=4.0
 space_around_core=10
 
 # The folder in which place and route reports and post-routing netlists and spef files will be stored
-pr_folder=~/COFFE/output_files/strtx_III_dsp/pr
+pr_folder=/mnt/vault1/rsunketa/COFFE/output_files/strtx_III_dsp/pr
 
 ##############################################
 ########## Prime Time Settings ###############
@@ -113,7 +113,7 @@ pr_folder=~/COFFE/output_files/strtx_III_dsp/pr
 #mode_signal=mode_0
 #mode_signal=mode_1
 
-primetime_folder=~/COFFE/output_files/strtx_III_dsp/pt
+primetime_folder=/mnt/vault1/rsunketa/COFFE/output_files/strtx_III_dsp/pt
 
 # COFFE parameters:
 name=hard_block

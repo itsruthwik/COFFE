@@ -21,7 +21,7 @@ fpga_arch_params:
 
   #The directory in which output files will be stored. 
   #If not specified, the directory containing this file is used as output dir.
-  arch_out_folder : ~/COFFE/output_files/strtx_III_dsp/arch_out_dir
+  arch_out_folder : /mnt/vault1/rsunketa/COFFE/output_files/strtx_III_dsp/arch_out_dir
 
   #######################################
   ##### Architecture Parameters
@@ -205,16 +205,16 @@ asic_hardblock_params:
     ###################### PLOTTING SETTINGS ######################
     ###############################################################
     #The coffe repo path is used to find other python files in coffe in the analyze_results dir
-    - coffe_repo_path : ~/COFFE
+    - coffe_repo_path : /mnt/vault1/rsunketa/COFFE
       #This is where parsed results will be generated 
-      condensed_results_folder : ~/COFFE/output_files/strtx_III_dsp/condensed_results
+      condensed_results_folder : /mnt/vault1/rsunketa/COFFE/output_files/strtx_III_dsp/condensed_results
 
       ###############################################################
       ###################### PARALLEL SETTINGS ######################
       ###############################################################
 
       #This is the folder which will contain the parallel asic flow directory structure
-      parallel_hardblock_folder : ~/COFFE/output_files/strtx_III_dsp/asic_work
+      parallel_hardblock_folder : /mnt/vault1/rsunketa/COFFE/output_files/strtx_III_dsp/asic_work
 
       #The maximum number of cores to be assigned to the parallel flow
       mp_num_cores : 16
@@ -243,7 +243,7 @@ asic_hardblock_params:
         - /CMC/kits/tsmc_65nm_libs/tpzn65gpgv2/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tpzn65gpgv2_140c
 
       # The folder in which all the design files are located:
-      design_folder : ~/COFFE/input_files/strtx_III_dsp/dsp_block_hdl
+      design_folder : /mnt/vault1/rsunketa/COFFE/input_files/strtx_III_dsp/dsp_block_hdl
 
       # The design language. Should be either 'verilog', 'vhdl' or 'sverilog'
       design_language : verilog
@@ -273,7 +273,7 @@ asic_hardblock_params:
       top_level : dsp
 
       # The name of the folder in which post-synthesis files and synthesis reports are to be stored
-      synth_folder : ~/COFFE/output_files/strtx_III_dsp/synth
+      synth_folder : /mnt/vault1/rsunketa/COFFE/output_files/strtx_III_dsp/synth
 
       # Do you want to be informed of warnings during synthesis?
       show_warnings : True
@@ -372,7 +372,7 @@ asic_hardblock_params:
 
 
       # The folder in which place and route reports and post-routing netlists and spef files will be stored
-      pr_folder : ~/COFFE/output_files/strtx_III_dsp/pr
+      pr_folder : /mnt/vault1/rsunketa/COFFE/output_files/strtx_III_dsp/pr
 
 
       ##############################################
@@ -385,7 +385,7 @@ asic_hardblock_params:
       primetime_libs : 
         - tcbn65gpluswc.db
 
-      primetime_folder : ~/COFFE/output_files/strtx_III_dsp/pt
+      primetime_folder : /mnt/vault1/rsunketa/COFFE/output_files/strtx_III_dsp/pt
 
       # COFFE parameters:
       # These params specify how the asic hardblock is connected and floorplanned into FPGA
