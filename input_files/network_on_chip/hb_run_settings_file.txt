@@ -8,11 +8,11 @@
 
 
 synth begin
-    "run_flag" : "False"
+    "run_flag" : "True"
 end
 pnr begin
-    "run_flag" : "True"
-    "override_outputs" : "False"
+    "run_flag" : "False"
+    "override_outputs" : "True"
     param_filters begin
         "period" : ["0.6"], 
         "wiremdl" : ["WireAreaLowkAgr"],

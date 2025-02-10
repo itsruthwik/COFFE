@@ -21,7 +21,7 @@
 fpga_arch_params:
   #The directory in which output files will be stored. 
   #If not specified, the directory containing this file is used as output dir.
-  arch_out_folder : /mnt/vault1/rsunketa/COFFE/output_files/network_on_chip/arch_out_dir
+  arch_out_folder : /mnt/vault0/rsunketa/COFFE/output_files/network_on_chip/arch_out_dir
 
   # The following parameters are the classic VPR architecture parameters
   N : 10
@@ -221,16 +221,16 @@ asic_hardblock_params:
     ###################### PLOTTING SETTINGS ######################
     ###############################################################
     #The coffe repo path is used to find other python files in coffe in the analyze_results dir
-    - coffe_repo_path : /mnt/vault1/rsunketa/COFFE
+    - coffe_repo_path : /mnt/vault0/rsunketa/COFFE
       #This is where parsed results will be generated 
-      condensed_results_folder : /mnt/vault1/rsunketa/COFFE/output_files/network_on_chip/condensed_results
+      condensed_results_folder : /mnt/vault0/rsunketa/COFFE/output_files/network_on_chip/condensed_results
 
       ###############################################################
       ###################### PARALLEL SETTINGS ######################
       ###############################################################
 
       #This is the folder which will contain the parallel asic flow directory structure
-      parallel_hardblock_folder : /mnt/vault1/rsunketa/COFFE/output_files/network_on_chip/asic_work
+      parallel_hardblock_folder : /mnt/vault0/rsunketa/COFFE/output_files/network_on_chip/asic_work
 
       #The maximum number of cores to be assigned to the parallel flow
       mp_num_cores : 16
@@ -246,25 +246,26 @@ asic_hardblock_params:
       #runs the partition flow on the design
       partition_flag : True
 
-      ptn_settings_file : /mnt/vault1/rsunketa/COFFE/input_files/network_on_chip/ptn_settings_file.txt
+      ptn_settings_file : /mnt/vault0/rsunketa/COFFE/input_files/network_on_chip/ptn_settings_file.txt
 
       #############################################
       ########## General Design Settings ##########
       #############################################
 
       #node size of process in nm
-      process_size : 65
+      process_size : 130
 
       #Absolute paths to directories containing power_timing_noise information for the desired process
       process_lib_paths : 
-        - /CMC/kits/tsmc_65nm_libs/tcbn65gplus/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tcbn65gplus_140b
-        - /CMC/kits/tsmc_65nm_libs/tpzn65gpgv2/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tpzn65gpgv2_140c
+        - /mnt/vault0/PDKs/sky130_cds/sky130_osu_sc_t18/18T_ms/lib
+        # - /CMC/kits/tsmc_65nm_libs/tcbn65gplus/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tcbn65gplus_140b
+        # - /CMC/kits/tsmc_65nm_libs/tpzn65gpgv2/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tpzn65gpgv2_140c
 
       # The folder in which all the design files are located:
-      design_folder : /mnt/vault1/rsunketa/COFFE/input_files/network_on_chip/router/src
+      design_folder : /mnt/vault0/rsunketa/COFFE/input_files/network_on_chip/router/src
 
       # The design language. Should be either 'verilog', 'vhdl' or 'sverilog'
-      design_language : sverilog
+      design_language : verilog
 
       # The exponents of delay and area in the cost function.
       # cost  :  (delay ^ delay_cost_exp) * (area ^ area_cost_exp)
@@ -282,7 +283,7 @@ asic_hardblock_params:
       clock_pin_name : clk
 
       # Desired clock period in ns
-      clock_period : [1.53]
+      clock_period : [2.0]
 
       # Wire loading model to be used
       wire_selection : [WireAreaLowkCon]
@@ -291,7 +292,7 @@ asic_hardblock_params:
       top_level : router_wrap
 
       # The name of the folder in which post-synthesis files and synthesis reports are to be stored
-      synth_folder : /mnt/vault1/rsunketa/COFFE/output_files/network_on_chip/synth
+      synth_folder : /mnt/vault0/rsunketa/COFFE/output_files/network_on_chip/synth
 
       # Do you want to be informed of warnings during synthesis?
       show_warnings : True
@@ -314,8 +315,9 @@ asic_hardblock_params:
       # Location of the library files.
       # if you have more than one library, please provide them similiar to the example below.
       target_libraries :
-      - /CMC/kits/tsmc_65nm_libs/tcbn65gplus/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tcbn65gplus_140b/tcbn65gpluswc.db
-      - /CMC/kits/tsmc_65nm_libs/tpzn65gpgv2/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tpzn65gpgv2_140c/tpzn65gpgv2wc.db
+        - /mnt/vault0/PDKs/skywater-pdk/vendor/synopsys/results/lib/sky130_fd_sc_hd/db_nldm/sky130_fd_sc_hd__tt_025C_1v80.db
+      # - /CMC/kits/tsmc_65nm_libs/tcbn65gplus/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tcbn65gplus_140b/tcbn65gpluswc.db
+      # - /CMC/kits/tsmc_65nm_libs/tpzn65gpgv2/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tpzn65gpgv2_140c/tpzn65gpgv2wc.db
 
       ##############################################
       ########## Place and Route Settings ##########
@@ -363,21 +365,28 @@ asic_hardblock_params:
       core_utilization : ["0.70"]
 
       lef_files : 
-        - /CMC/kits/tsmc_65nm_libs/tcbn65gplus/TSMCHOME/digital/Back_End/lef/tcbn65gplus_200a/lef/tcbn65gplus_9lmT2.lef
-        - /CMC/kits/tsmc_65nm_libs/tpzn65gpgv2/TSMCHOME/digital/Back_End/lef/tpzn65gpgv2_140c/mt_2/9lm/lef/antenna_9lm.lef
-        - /CMC/kits/tsmc_65nm_libs/tpzn65gpgv2/TSMCHOME/digital/Back_End/lef/tpzn65gpgv2_140c/mt_2/9lm/lef/tpzn65gpgv2_9lm.lef
+        - /mnt/vault0/PDKs/sky130_cds/sky130_osu_sc_t18/sky130_osu_sc_18T.tlef
+        - /mnt/vault0/PDKs/sky130_cds/sky130_osu_sc_t18/18T_ms/lef/sky130_osu_sc_18T_ms.lef
+        # - /CMC/kits/tsmc_65nm_libs/tcbn65gplus/TSMCHOME/digital/Back_End/lef/tcbn65gplus_200a/lef/tcbn65gplus_9lmT2.lef
+        # - /CMC/kits/tsmc_65nm_libs/tpzn65gpgv2/TSMCHOME/digital/Back_End/lef/tpzn65gpgv2_140c/mt_2/9lm/lef/antenna_9lm.lef
+        # - /CMC/kits/tsmc_65nm_libs/tpzn65gpgv2/TSMCHOME/digital/Back_End/lef/tpzn65gpgv2_140c/mt_2/9lm/lef/tpzn65gpgv2_9lm.lef
 
-      best_case_libs : 
-        - /CMC/kits/tsmc_65nm_libs/tcbn65gplus/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tcbn65gplus_140b/tcbn65gplusbc.lib
-        - /CMC/kits/tsmc_65nm_libs/tpzn65gpgv2/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tpzn65gpgv2_140c/tpzn65gpgv2bc.lib
+      best_case_libs :
+        - /mnt/vault0/PDKs/sky130_cds/sky130_osu_sc_t18/18T_ms/lib/sky130_osu_sc_18T_ms_ff_1P56_-40C.ccs.db
+        # - /mnt/vault0/PDKs/sky130_cds/sky130_osu_sc_t18/18T_ms/lib/sky130_osu_sc_18T_ms_TT_1P8_25C.ccs.lib
+        # - /CMC/kits/tsmc_65nm_libs/tcbn65gplus/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tcbn65gplus_140b/tcbn65gplusbc.lib
+        # - /CMC/kits/tsmc_65nm_libs/tpzn65gpgv2/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tpzn65gpgv2_140c/tpzn65gpgv2bc.lib
 
       standard_libs : 
-        - /CMC/kits/tsmc_65nm_libs/tcbn65gplus/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tcbn65gplus_140b/tcbn65gplustc.lib
-        - /CMC/kits/tsmc_65nm_libs/tpzn65gpgv2/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tpzn65gpgv2_140c/tpzn65gpgv2tc.lib
+        - /mnt/vault0/PDKs/sky130_cds/sky130_osu_sc_t18/18T_ms/lib/sky130_osu_sc_18T_ms_TT_1P8_25C.ccs.lib
+        # - /CMC/kits/tsmc_65nm_libs/tcbn65gplus/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tcbn65gplus_140b/tcbn65gplustc.lib
+        # - /CMC/kits/tsmc_65nm_libs/tpzn65gpgv2/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tpzn65gpgv2_140c/tpzn65gpgv2tc.lib
 
       worst_case_libs : 
-        - /CMC/kits/tsmc_65nm_libs/tcbn65gplus/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tcbn65gplus_140b/tcbn65gpluswc.lib
-        - /CMC/kits/tsmc_65nm_libs/tpzn65gpgv2/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tpzn65gpgv2_140c/tpzn65gpgv2wc.lib
+        - /mnt/vault0/PDKs/sky130_cds/sky130_osu_sc_t18/18T_ms/lib/sky130_osu_sc_18T_ms_tt_2P10_25C.ccs.lib
+        # - /mnt/vault0/PDKs/sky130_cds/sky130_osu_sc_t18/18T_ms/lib/sky130_osu_sc_18T_ms_TT_1P8_25C.ccs.lib
+        # - /CMC/kits/tsmc_65nm_libs/tcbn65gplus/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tcbn65gplus_140b/tcbn65gpluswc.lib
+        # - /CMC/kits/tsmc_65nm_libs/tpzn65gpgv2/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tpzn65gpgv2_140c/tpzn65gpgv2wc.lib
 
 
 
@@ -390,7 +399,7 @@ asic_hardblock_params:
 
 
       # The folder in which place and route reports and post-routing netlists and spef files will be stored
-      pr_folder : /mnt/vault1/rsunketa/COFFE/output_files/network_on_chip/pr
+      pr_folder : /mnt/vault0/rsunketa/COFFE/output_files/network_on_chip/pr
 
 
       ##############################################
@@ -403,7 +412,7 @@ asic_hardblock_params:
       primetime_libs : 
         - tcbn65gpluswc.db
 
-      primetime_folder : /mnt/vault1/rsunketa/COFFE/output_files/network_on_chip/pt
+      primetime_folder : /mnt/vault0/rsunketa/COFFE/output_files/network_on_chip/pt
 
       # COFFE parameters:
       # These params specify how the asic hardblock is connected and floorplanned into FPGA
